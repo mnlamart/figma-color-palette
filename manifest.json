@@ -1,0 +1,18 @@
+{
+  "name": "color",
+  "id": "1462821630238655566",
+  "api": "1.0.0",
+  "main": "dist/code.js",
+  "capabilities": [],
+  "enableProposedApi": false,
+  "documentAccess": "dynamic-page",
+  "editorType": [
+    "figma"
+  ],
+  "networkAccess": {
+    "allowedDomains": [
+      "none"
+    ]
+  },
+  "ui": "dist/ui.html"
+}
