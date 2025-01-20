@@ -1,5 +1,4 @@
 import createAutoLayoutFrame, { AutoLayoutOptions } from "./create-frames";
-import hexToRGB from "./hex-to-rgb";
 
 type CreateEllipsesOptions = {
   colors: string[];
@@ -26,7 +25,7 @@ const createEllipsesGroup = (options: CreateEllipsesOptions): FrameNode => {
     const ellipse = figma.createEllipse();
     const size = options.ellipseSize ?? { width: 100, height: 100 };
     ellipse.resize(size.width, size.height);
-    ellipse.fills = [{ type: "SOLID", color: hexToRGB(color) }];
+    ellipse.fills = [{ type: "SOLID", color: figma.util.rgb(color) }];
     ellipse.x = index * (size.width + (options.ellipseSpacing ?? 20));
     group.appendChild(ellipse);
   });

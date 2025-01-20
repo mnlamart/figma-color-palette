@@ -35,6 +35,10 @@ function App() {
     );
   };
 
+  const onLogs = () => {
+    parent.postMessage({ pluginMessage: { type: "log" } }, "*");
+  };
+
   const onCancel = () => {
     parent.postMessage({ pluginMessage: { type: "cancel" } }, "*");
   };
@@ -64,6 +68,10 @@ function App() {
       <footer>
         <button onClick={onCreate}>
           Créer
+        </button>
+
+        <button onClick={onLogs}>
+          Logs
         </button>
 
         <button onClick={onCancel}>Annuler</button>
