@@ -10,13 +10,13 @@ type Color = {
 };
 
 const defaultColors: Color[] = [
-  { label: "Red", name: "red", baseHex: "#FF0000", tints: null },
-  { label: "Orange", name: "orange", baseHex: "#FFA500", tints: null },
-  { label: "Yellow", name: "yellow", baseHex: "#FFFF00", tints: null },
-  { label: "Green", name: "green", baseHex: "#008000", tints: null },
-  { label: "Blue", name: "blue", baseHex: "#0000FF", tints: null },
-  { label: "Purple", name: "purple", baseHex: "#800080", tints: null },
-  { label: "Grey", name: "grey", baseHex: "#808080", tints: null },
+  { label: "Red", name: "red", baseHex: "#EB1212", tints: null },
+  { label: "Orange", name: "orange", baseHex: "#F77807", tints: null },
+  { label: "Yellow", name: "yellow", baseHex: "#EFC331", tints: null },
+  { label: "Green", name: "green", baseHex: "#4DA23A", tints: null },
+  { label: "Blue", name: "blue", baseHex: "#499DD2", tints: null },
+  { label: "Purple", name: "purple", baseHex: "#BB5DD8", tints: null },
+  { label: "Grey", name: "grey", baseHex: "#686868", tints: null },
 ];
 
 function App() {
@@ -30,7 +30,7 @@ function App() {
 
   const onCreate = () => {
     parent.postMessage(
-      { pluginMessage: { type: "create-shapes", colors } },
+      { pluginMessage: { type: "generate-color-palette", colors } },
       "*"
     );
   };

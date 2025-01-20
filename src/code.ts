@@ -7,9 +7,11 @@ import './ui.css';
 figma.showUI(__html__, { themeColors: true, width: 700, height: 700 });
 
 figma.ui.onmessage = async (msg: { type: string, colors: { name: string, baseHex: string, label: string }[] }) => {
-  console.log(msg.colors);
+  if (msg.type === 'cancel') {
+    figma.closePlugin();
+  }
 
-  if (msg.type === 'create-shapes') {
+  if (msg.type === 'generate-color-palette') {
     // Create base colors ellipses
     const baseColors = createEllipsesGroup({
       colors: msg.colors.map(color => color.baseHex),
@@ -24,8 +26,6 @@ figma.ui.onmessage = async (msg: { type: string, colors: { name: string, baseHex
       ellipseSpacing: 15,
     });
 
-    console.log('msg.colors', msg.colors);
-
     const colorFrames: FrameNode[] = [];
 
     await figma.loadFontAsync({ family: "Inter", style: "Regular" });
@@ -36,6 +36,7 @@ figma.ui.onmessage = async (msg: { type: string, colors: { name: string, baseHex
 
       const tintFrames = Object.entries(colorTints).map(([shade, tintColor]) => {
         const square = figma.createRectangle();
+        square.name = `${color.name} / ${shade}`;
         square.fills = [{ type: 'SOLID', color: hexToRGB(tintColor) }];
         square.resize(100, 100);
 
@@ -57,7 +58,7 @@ figma.ui.onmessage = async (msg: { type: string, colors: { name: string, baseHex
       });
 
       const tintGroup = createAutoLayoutFrame({
-        name: `${color.name} Tints`,
+        name: `${color.label} Tints`,
         layoutMode: "HORIZONTAL",
         primaryAxisAlign: "CENTER",
         counterAxisAlign: "CENTER",
@@ -71,10 +72,6 @@ figma.ui.onmessage = async (msg: { type: string, colors: { name: string, baseHex
       colorName.textAlignHorizontal = "CENTER";
       colorName.textAlignVertical = "CENTER";
       colorName.fontSize = 24;
-      colorName.fills = [{
-        type: 'SOLID',
-        color: { r: 0.506, g: 0.506, b: 0.506 } // Couleur #818181
-      }];
 
       colorFrames.push(createAutoLayoutFrame({
         name: color.label,
@@ -103,7 +100,7 @@ figma.ui.onmessage = async (msg: { type: string, colors: { name: string, baseHex
       position: { x: 0, y: 0 },
       children: [baseColors, ...colorFrames],
     });
-  }
 
-  figma.closePlugin();
+    figma.closePlugin();
+  }
 };
