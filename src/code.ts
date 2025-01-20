@@ -1,4 +1,3 @@
-import createEllipsesGroup from "./create-ellipses";
 import createAutoLayoutFrame from "./create-frames";
 import generateColorTints from "./generate-color-tint";
 import './ui.css';
@@ -30,27 +29,30 @@ figma.ui.onmessage = async (msg: { type: string, colors: { name: string, baseHex
   }
 
   if (msg.type === 'generate-color-palette') {
+    // Load font
+    await figma.loadFontAsync({ family: "Inter", style: "Regular" });
+
     // Create new variable collection.
     const colorCollection = figma.variables.createVariableCollection('Primitives');
     const primitiveModeId = colorCollection.modes[0].modeId
 
     // Create base colors ellipses
-    const baseColors = createEllipsesGroup({
-      colors: msg.colors.map(color => color.baseHex),
-      layoutOptions: {
-        name: "Base colors",
-        layoutMode: "HORIZONTAL",
-        primaryAxisAlign: "CENTER",
-        counterAxisAlign: "CENTER",
-        itemSpacing: 30,
-      },
-      ellipseSize: { width: 120, height: 120 },
-      ellipseSpacing: 15,
+    const baseColorGroup = createAutoLayoutFrame({
+      name: "Base colors",
+      layoutMode: "HORIZONTAL",
+      primaryAxisAlign: "CENTER",
+      counterAxisAlign: "CENTER",
+      itemSpacing: 30,
+    });
+
+    msg.colors.forEach((color) => {
+      const ellipse = figma.createEllipse();
+      ellipse.resize(100, 100);
+      ellipse.fills = [{ type: "SOLID", color: figma.util.rgb(color.baseHex) }];
+      baseColorGroup.appendChild(ellipse);
     });
 
     const colorFrames: FrameNode[] = [];
-
-    await figma.loadFontAsync({ family: "Inter", style: "Regular" });
 
     // For each color, generate tints and variables
     msg.colors.forEach((color) => {
@@ -148,7 +150,7 @@ figma.ui.onmessage = async (msg: { type: string, colors: { name: string, baseHex
       itemSpacing: 32,
       backgroundColor: { r: 0.843, g: 0.843, b: 0.843 },
       position: { x: 0, y: 0 },
-      children: [baseColors, ...colorFrames],
+      children: [baseColorGroup, ...colorFrames],
     });
 
     figma.closePlugin();
