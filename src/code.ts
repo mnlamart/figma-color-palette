@@ -152,6 +152,7 @@ figma.ui.onmessage = async (msg: { type: string, colors: { name: string, baseHex
     });
 
     // Create main frame.
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const colorPaletteFrame = createAutoLayoutFrame({
       name: "Colors",
       layoutMode: "VERTICAL",
@@ -164,8 +165,7 @@ figma.ui.onmessage = async (msg: { type: string, colors: { name: string, baseHex
       children: [baseColorGroup, ...colorFrames],
     });
 
-    console.log(colorPaletteFrame);
-
+    /*
     const colorTokenFrameX = colorPaletteFrame.x + colorPaletteFrame.width + 300;
 
     // ========================
@@ -192,5 +192,6 @@ figma.ui.onmessage = async (msg: { type: string, colors: { name: string, baseHex
     // ========================
     // Semantic Colors
     // ========================
+    */
   }
 };

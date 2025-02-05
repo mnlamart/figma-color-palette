@@ -15,12 +15,15 @@ const defaultColors: Color[] = [
   { label: "Yellow", name: "yellow", baseHex: "#EFC331", tints: null },
   { label: "Green", name: "green", baseHex: "#4DA23A", tints: null },
   { label: "Blue", name: "blue", baseHex: "#499DD2", tints: null },
-  { label: "Purple", name: "purple", baseHex: "#BB5DD8", tints: null },
+  { label: "Purple", name: "purple", baseHex: "#A629CC", tints: null },
+  { label: "Pink", name: "pink", baseHex: "#FF88F8", tints: null },
   { label: "Grey", name: "grey", baseHex: "#686868", tints: null },
 ];
 
 function App() {
   const [colors, setColors] = React.useState<Color[]>(defaultColors);
+  const isDev = process.env.NODE_ENV === "development";
+
 
   const handleColorChange = (index: number, value: string) => {
     const newColors = [...colors];
@@ -70,9 +73,11 @@ function App() {
           Créer
         </button>
 
-        <button onClick={onLogs}>
+        {isDev ? (
+          <button onClick={onLogs}>
           Logs
         </button>
+        ) : null}
 
         <button onClick={onCancel}>Annuler</button>
       </footer>

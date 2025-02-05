@@ -22,3 +22,7 @@ input[type="color"] {
     width: 40px;
 }
 
+footer {
+    display: flex;
+    gap: 16px;
+}
