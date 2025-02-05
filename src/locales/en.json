@@ -1,0 +1,17 @@
+{
+    "ui": {
+        "cancel": "Cancel",
+        "choose_base_colors": "Choose your base colors:",
+        "create_palette": "Create"
+    },
+    "colors": {
+        "blue": "Blue",
+        "green": "Green",
+        "grey": "Grey",
+        "orange": "Orange",
+        "pink": "Pink",
+        "purple": "Purple",
+        "red": "Red",
+        "yellow": "Yellow"
+    }
+}
