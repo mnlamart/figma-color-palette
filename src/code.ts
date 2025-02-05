@@ -1,4 +1,5 @@
 import createAutoLayoutFrame from "./create-frames";
+import figmaRgbTo255 from "./figmaRgbTo255";
 import generateColorTints from "./generate-color-tint";
 import './ui.css';
 
@@ -92,6 +93,16 @@ figma.ui.onmessage = async (msg: { type: string, colors: { name: string, baseHex
 
         square.resize(100, 100);
 
+        const tintHex = figma.createText();
+        tintHex.characters = tintColor;
+        tintHex.textAlignHorizontal = "CENTER";
+        tintHex.textAlignVertical = "CENTER";
+
+        const tintRgb = figma.createText();
+        tintRgb.characters = `(${figmaRgbTo255(tintRGB.r)}, ${figmaRgbTo255(tintRGB.g)}, ${figmaRgbTo255(tintRGB.b)})`;
+        tintRgb.textAlignHorizontal = "CENTER";
+        tintRgb.textAlignVertical = "CENTER";
+
         const tintValue = figma.createText();
         tintValue.characters = shade;
         tintValue.textAlignHorizontal = "CENTER";
@@ -104,7 +115,7 @@ figma.ui.onmessage = async (msg: { type: string, colors: { name: string, baseHex
           counterAxisAlign: "CENTER",
           itemSpacing: 16,
           backgroundColor: { r: 1, g: 1, b: 1 },
-          children: [square, tintValue],
+          children: [tintValue, square, tintHex, tintRgb],
           appendToFigma: false,
         });
       });
@@ -141,7 +152,7 @@ figma.ui.onmessage = async (msg: { type: string, colors: { name: string, baseHex
     });
 
     // Create main frame.
-    createAutoLayoutFrame({
+    const colorPaletteFrame = createAutoLayoutFrame({
       name: "Colors",
       layoutMode: "VERTICAL",
       primaryAxisAlign: "CENTER",
@@ -153,6 +164,33 @@ figma.ui.onmessage = async (msg: { type: string, colors: { name: string, baseHex
       children: [baseColorGroup, ...colorFrames],
     });
 
-    figma.closePlugin();
+    console.log(colorPaletteFrame);
+
+    const colorTokenFrameX = colorPaletteFrame.x + colorPaletteFrame.width + 300;
+
+    // ========================
+    // Color Tokens
+    // ========================
+    const colorTokensFrame = createAutoLayoutFrame({
+      name: "Color Tokens",
+      layoutMode: "VERTICAL",
+      primaryAxisAlign: "CENTER",
+      counterAxisAlign: "CENTER",
+      paddingPerSide: { paddingTop: 32, paddingRight: 24, paddingBottom: 32, paddingLeft: 24 },
+      itemSpacing: 32,
+      backgroundColor: { r: 0.843, g: 0.843, b: 0.843 },
+      position: { x: colorTokenFrameX, y: 0 },
+      children: [],
+    });
+
+    colorTokensFrame.x = colorPaletteFrame.x + colorPaletteFrame.width + 300;
+    colorTokensFrame.y = 0;
+
+    // figma.closePlugin();
+
+
+    // ========================
+    // Semantic Colors
+    // ========================
   }
 };
