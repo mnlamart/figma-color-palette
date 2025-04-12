@@ -9,10 +9,16 @@ body {
     margin-bottom: 24px;
 }
 
-.colors-grid-item {
+.colors-grid__item {
     align-items: center;
     display: flex;
     justify-content: flex-start;
+}
+
+.color-input {
+    display: flex;
+    flex-direction: column;
+    width: 60px;
 }
 
 input[type="color"] {
@@ -20,6 +26,25 @@ input[type="color"] {
     cursor: pointer;
     height: 40px;
     width: 40px;
+}
+
+.color-preview__wrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: center;
+    width: 50px;
+}
+
+.color-preview__display {
+    border-radius: 4px;
+    height: 40px;
+    width: 40px;
+}
+
+.color-preview__label {
+
 }
 
 footer {

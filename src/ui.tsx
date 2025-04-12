@@ -3,6 +3,7 @@ import * as ReactDOM from "react-dom/client";
 import "./ui.css";
 import i18n from './i18n'
 import { withTranslation } from "react-i18next";
+import generateColorTints from "./generate-color-tint";
 
 type Color = {
   label: string;
@@ -49,24 +50,45 @@ function App() {
     parent.postMessage({ pluginMessage: { type: "cancel" } }, "*");
   };
 
+  interface ColorTints {
+    [shade: string]: string;
+  }
+
+  const generatePreview = (color: string): React.ReactElement[] => {
+    const colorTints: ColorTints = generateColorTints(color);
+
+    return Object.entries(colorTints).map(([shade, tintColor]: [string, string]) => {
+      return (
+        <div className="color-preview__wrapper" key={shade}>
+          <div className="color-preview__label">
+            {shade}
+          </div>
+          <div className="color-preview__display" style={{ backgroundColor: tintColor }}></div>
+        </div>
+      );
+    });
+  };
+
   return (
     <main>
       <header>
-      <h2>{i18n.t('ui.choose_base_colors')}</h2>
+        <h2>{i18n.t('ui.choose_base_colors')}</h2>
       </header>
 
       <section>
         <div className="colors-grid">
           {colors.map((color, index) => (
-            <div key={color.name}>
+            <div className="colors-grid__item" key={color.name}>
+              <div className="color-input">
+                <label>{color.label}</label>
+                <input
+                  type="color"
+                  value={colors[index].baseHex}
+                  onChange={(e) => handleColorChange(index, e.target.value)}
+                />
+              </div>
 
-              <label>{color.label}</label>
-              <input
-                className="colors-grid-item"
-                type="color"
-                value={colors[index].baseHex}
-                onChange={(e) => handleColorChange(index, e.target.value)}
-              />
+              {generatePreview(colors[index].baseHex)}
             </div>
           ))}
         </div>
@@ -79,8 +101,8 @@ function App() {
 
         {isDev ? (
           <button onClick={onLogs}>
-          {i18n.t('ui.log')}
-        </button>
+            {i18n.t('ui.log')}
+          </button>
         ) : null}
 
         <button onClick={onCancel}>{i18n.t('ui.cancel')}</button>
