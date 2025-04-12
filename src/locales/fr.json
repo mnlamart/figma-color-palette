@@ -2,7 +2,8 @@
     "ui": {
         "cancel": "Annuler",
         "choose_base_colors": "Choisissez vos couleurs de base:",
-        "create_palette": "Créer"
+        "create_palette": "Créer",
+        "log": "Log"
     },
     "colors": {
         "blue": "Bleu",
