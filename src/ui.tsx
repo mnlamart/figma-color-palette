@@ -95,7 +95,7 @@ function App() {
       </section>
 
       <footer>
-        <button onClick={onCreate}>
+        <button className="btn" onClick={onCreate}>
           {i18n.t('ui.create_palette')}
         </button>
 
@@ -105,7 +105,7 @@ function App() {
           </button>
         ) : null}
 
-        <button onClick={onCancel}>{i18n.t('ui.cancel')}</button>
+        <button className="btn btn--danger" onClick={onCancel}>{i18n.t('ui.cancel')}</button>
       </footer>
     </main>
   );

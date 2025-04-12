@@ -3,7 +3,7 @@ import figmaRgbTo255 from "./figmaRgbTo255";
 import generateColorTints from "./generate-color-tint";
 import './ui.css';
 
-figma.showUI(__html__, { themeColors: true, width: 700, height: 700 });
+figma.showUI(__html__, { themeColors: true, width: 700, height: 800 });
 
 figma.ui.onmessage = async (msg: { type: string, colors: { name: string, baseHex: string, label: string }[] }) => {
   if (msg.type === 'cancel') {
@@ -164,6 +164,8 @@ figma.ui.onmessage = async (msg: { type: string, colors: { name: string, baseHex
       position: { x: 0, y: 0 },
       children: [baseColorGroup, ...colorFrames],
     });
+
+    figma.closePlugin();
 
     /*
     const colorTokenFrameX = colorPaletteFrame.x + colorPaletteFrame.width + 300;
